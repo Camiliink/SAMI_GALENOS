@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block titulo %} Crear Nuevo Usuario {% endblock %}
+
+    {% block contenido %} 
+     <div class="card">
+        <div class="card-header">
+            Crear nuevo usuario
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">DATOS DEL USUARIO</h4>
+
+            {% include 'usuarios/form.html' %}
+
+
+        </div>
+     </div>
+     
+
+
+
+
+
+
+    {% endblock %}
+   
