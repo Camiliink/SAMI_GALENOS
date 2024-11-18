@@ -1,24 +1,35 @@
 <form enctype="multipart/form-data" method="post">
- {% csrf_token %}
- {% for campo in formulario %}
-    <div class="mb-3">
-        <label for="" class="form-label">{{ campo.label }}</label>
-        <input type="{{ campo.field.widget.input_type }}" 
-        class="form-control" 
-        name="{{campo.name}}" id="" 
-        aria-describedby="helpId" 
-        placeholder="{{ campo.label }}"
-        value="{{ campo.value | default:"" }}"/>
-        
-    </div> 
-    <div class="col-12 help-text">{{ campo.errors }} </div>
-  
-{% endfor %}
-<input name="" id="" class="btn btn-success" type="submit" value="Enviar Información"/>
-<a class="btn btn-primary"
-    href="{% url 'usuarios' %}"
-    role="button"
-    >Cancelar</a
->
+    {% csrf_token %}
+    {% for campo in formulario %}
+        <div class="mb-3">
+            <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+            
+            {# Verificamos si el campo es un tipo de entrada de texto o de selección #}
+            {% if campo.field.widget.input_type == 'select' %}
+                {{ campo }}  <!-- Si es un campo de selección, se renderiza normalmente -->
+            {% else %}
+                <input type="{{ campo.field.widget.input_type }}" 
+                    class="form-control" 
+                    name="{{ campo.name }}" 
+                    id="{{ campo.id_for_label }}" 
+                    aria-describedby="helpId" 
+                    placeholder="{{ campo.label }}" 
+                    value="{{ campo.value|default:'' }}"/>
+            {% endif %}
+        </div> 
+
+        <div class="col-12 help-text">
+            {% if campo.errors %}
+                <div class="text-danger">
+                    {% for error in campo.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <input class="btn btn-success" type="submit" value="Enviar Información"/>
     
+    <a class="btn btn-primary" href="{% url 'usuarios' %}" role="button">Cancelar</a>
 </form>
