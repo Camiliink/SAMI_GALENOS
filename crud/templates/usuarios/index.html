@@ -23,6 +23,7 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">RUT</th>
                             <th scope="col">Nombre Completo</th>
                             <th scope="col">Nombre de Usuario</th>
                             <th scope="col">Tipo de Usuario</th>
@@ -34,6 +35,7 @@
                         {% for usuario in usuarios %}
                         <tr class="">
                             <td scope="row">{{ usuario.code }}</td>
+                            <td>{{ usuario.rut }}</td>
                             <td>{{ usuario.nombre_completo }}</td>
                             <td>{{ usuario.nombre_usuario }}</td>
                             <td>{{ usuario.tipo_usuario }}</td>
