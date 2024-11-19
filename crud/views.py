@@ -15,7 +15,7 @@ def login(request):
             try:
                 usuario = Usuario.objects.get(nombre_usuario=nombre_usuario, contrasenna=contrasenna)
                 request.session['tipo_usuario'] = usuario.tipo_usuario  # Guardar tipo de usuario en sesión
-                return redirect('paginas/inicio')  # Redirigir a la página de inicio
+                return redirect('inicio')   # Redirigir a la página de inicio
             except Usuario.DoesNotExist:
                 form.add_error(None, "Usuario o contraseña incorrectos")
         return render(request, 'paginas/login.html', {'form': form})
