@@ -8,7 +8,8 @@ def inicio(request):
     return render(request, 'paginas/inicio.html')
 def nosotros(request):
     return render(request, 'paginas/nosotros.html')
-
+def hora(request):
+    return render(request, 'paginas/hora.html')
 def usuarios(request):
     usuarios= Usuario.objects.all()
 
