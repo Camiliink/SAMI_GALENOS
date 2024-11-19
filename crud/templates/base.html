@@ -30,10 +30,14 @@
         <nav class="navbar navbar-expand navbar-light bg-primary">
             <div class="nav navbar-nav">
                 <a class="navbar-brand" href="{% url 'inicio' %}" style="color: white; font-weight: bolder; font-size: 30px;">GALENOS Centro Médico</a>
-                <a class="nav-item nav-link active" href="{% url 'inicio' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;" >Inicio</a>
-                <a class="nav-item nav-link active" href="{% url 'usuarios' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;" >Usuarios</a>
+                <a class="nav-item nav-link active" href="{% url 'inicio' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Inicio</a>
                 <a class="nav-item nav-link active" href="{% url 'nosotros' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Nosotros</a>
-                <a class="nav-item nav-link active" href="{% url 'hora' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Hora</a>
+                
+                {% if request.session.tipo_usuario == 'administrador' %}
+                    <a class="nav-item nav-link active" href="{% url 'usuarios' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Usuarios</a>
+                {% elif request.session.tipo_usuario == 'paciente' %}
+                    <a class="nav-item nav-link active" href="{% url 'hora' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Hora</a>
+                {% endif %}
             </div>
         </nav>
         
