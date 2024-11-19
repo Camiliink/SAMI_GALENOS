@@ -64,14 +64,14 @@
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div>
-                {{ form.nombre_usuario.label_tag }}
+                {{ form.nombre_usuario.label_tag }} <br> <br>
                 {{ form.nombre_usuario }}
                 {% if form.nombre_usuario.errors %}
                     <div class="error">{{ form.nombre_usuario.errors }}</div>
                 {% endif %}
             </div>
             <div>
-                {{ form.contrasenna.label_tag }}
+                {{ form.contrasenna.label_tag }} <br> <br>
                 {{ form.contrasenna }}
                 {% if form.contrasenna.errors %}
                     <div class="error">{{ form.contrasenna.errors }}</div>
