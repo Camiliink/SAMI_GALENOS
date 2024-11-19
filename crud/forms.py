@@ -7,7 +7,17 @@ class UsuarioForm(forms.ModelForm):
         model = Usuario
         fields = '__all__'
         widgets = {
-            'tipo_usuario': forms.Select(choices=TIPO_USUARIO_CHOICES),  # Aquí usas las opciones importadas
+            'tipo_usuario': forms.Select(
+                choices=TIPO_USUARIO_CHOICES,
+                attrs={
+                    'class': 'form-select',  # Clase de Bootstrap para el estilo del <select>
+                }
+            ),
+            'rut': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre_usuario': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre_completo': forms.TextInput(attrs={'class': 'form-control'}),
+            'correo': forms.EmailInput(attrs={'class': 'form-control'}),
+            'contrasenna': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
 class LoginForm(forms.Form):
     nombre_usuario = forms.CharField(
