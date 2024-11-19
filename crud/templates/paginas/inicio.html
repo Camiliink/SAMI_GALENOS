@@ -1,20 +1,133 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 {% block titulo %} Inicio {% endblock %}
 
     {% block contenido %} 
-     <div class="row align-items-md-stretch">
-        <div class="col-md-6">
-            <div class="h-100 p-5 text-white bg-primary border rounded-3">
-                <h2>CENTRO MEDICO GALENOS</h2>
-            </div>
-            <p class="lead" >
-                
-            </p>
-        </div>
-        
+    <head>  
+        <link type="image/x-icon" rel="shortcut icon" href="{% static 'core/img/' %}" />
+        <!-- font awesome cdn link  -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+        <!-- custom css file link  -->
+        <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    </head>
+    
      </div>
-     
+     <section id="home" class="home">
+
+        <div class="row">
+            
+            <h1 class="heading"> CENTRO MEDICO GALENOS</h1>
+            
+            <!-- home images  -->
+            <div class="images">
+                <img src="{% static 'core/img/home.webp' %}" alt="">
+                <BR></BR>
+            </div>
+
+            <!-- home heading  -->
+            <div class="content">
+                <h1><span>Cuida</span> tu salud, Cuida tu <span>Vida.</h1>
+                <p>Compromiso de nuestros doctores</p>
+            </div>
+        </div>
+    </section>
+    <!-- home section end  -->
+
+
+    <!-- review section start  -->
+
+    <section id="review" class="review">
+
+        <h1 class="heading">Nuestros Pacientes</h1>
+        <h3 class="title">Porque su opinión importa.</h3>
+
+        <div class="box-container">
+
+            <!-- start here  -->
+            <div class="box">
+                <i class="fas fa-quote-left"></i>
+                <p>Excelente servicio, buenos profesionales </p>
+                <br>
+                <div class="images">
+                    <img src="{% static 'core/img/img-1.jpg' %}" alt="">
+
+                    <div class="info">
+                        <h3>Constanza Jopia</h3>
+                        <span>Fecha : 11/2020</span>
+                    </div>
+                </div>
+            </div>
+            <!-- end here  -->
+
+            
+            <!-- start here  -->
+            <div class="box">
+                <i class="fas fa-quote-left"></i>
+                <p>Toda la familia se atiende aquí y nunca decepciona</p>
+
+                <div class="images">
+                    <img src="{% static 'core/img/img-2.jpg' %}" alt="">
+
+                    <div class="info">
+                        <h3>Jhon Correcto</h3>
+                        <span>Fecha : 03/2022</span>
+                    </div>
+                </div>
+            </div>
+            <!-- end here  -->
+
+            
+            <!-- start here  -->
+            <div class="box">
+                <i class="fas fa-quote-left"></i>
+                <p>Me dejaron impecable, excelentes profesionales</p>
+
+                <div class="images">
+                    <img src="{% static 'core/img/img-3.jpg' %}" alt="">
+
+                    <div class="info">
+                        <h3>Juan Concha</h3>
+                        <span>Fecha : 12/2019</span>
+                    </div>
+                </div>
+            </div>
+            <!-- end here  -->
+        </div>
+    </section>
+    <!-- review section end  -->
+ 
+    <!-- contact section start  -->
+
+    <section id="contact" class="contact">
+
+        <h1 class="heading">Contacto</h1>
+
+        <div class="row">
+
+            <!-- form images  -->
+            
+
+            <div class="form-container">    
+
+            <input type="text" placeholder="Nombre Completo" name="" id="">
+            <input type="email" placeholder="Correo" name="" id="">
+            <textarea name="" cols="30" rows="10" id=""></textarea>
+            <input type="submit" value="Enviar">
+            </div>
+        </div>
+
+
+
+
+    </section>
+
+
+
+    <!-- contact section end  -->
+
+
+    
       {% endblock %}
    

@@ -1,9 +1,144 @@
 {% extends "base.html" %}
-
+{%load static%}
 
 {% block titulo %} Nosotros {% endblock %}
 
     {% block contenido %} 
-     Seccion nosotros
+     
+    <!-- about section start  -->
+
+    <section id="about" class="about">
+
+        <h1 class="heading">NOSOTROS</h1>
+
+        <div class="box-container">
+
+            <!-- start here  -->
+            <div class="box">
+                <!-- about images  -->
+                <div class="images">
+                    <img src="{% static 'core/img/about-1.png' %}" alt="">
+                </div>
+                
+                <!-- about heading & text  -->
+                <div class="content">
+                    <h3>ambulance services</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab necessitatibus omnis unde dolore suscipit magnam officia. Maxime explicabo qui distinctio?</p>
+                 <a href="#"><button class="button">learn more</button></a>   
+                </div>
+            </div>
+            <!-- end here  -->
+
+            
+            <!-- start here  -->
+            <div class="box">
+                <!-- about images  -->
+                <div class="images">
+                    <img src="{% static 'core/img/about-2.png' %}" alt="">
+                </div>
+                
+                <!-- about heading & text  -->
+                <div class="content">
+                    <h3>emergency rooms</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab necessitatibus omnis unde dolore suscipit magnam officia. Maxime explicabo qui distinctio?</p>
+                 <a href="#"><button class="button">learn more</button></a>   
+                </div>
+            </div>
+            <!-- end here  -->
+
+            
+            <!-- start here  -->
+            <div class="box">
+                <!-- about images  -->
+                <div class="images">
+                    <img src="{% static 'core/img/about-3.png' %}" alt="">
+                </div>
+                
+                <!-- about heading & text  -->
+                <div class="content">
+                    <h3>free check-ups</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab necessitatibus omnis unde dolore suscipit magnam officia. Maxime explicabo qui distinctio?</p>
+                 <a href="#"><button class="button">learn more</button></a>   
+                </div>
+            </div>
+            <!-- end here  -->
+           </div>
+    </section>
+
+    <!-- about section end  -->
+    
+    <!-- card section start  -->
+
+    <section id="doctor" class="card">
+
+        <div class="container">
+
+            <h1 class="heading">Nuestros Profesionales</h1>
+            
+
+            <div class="box-container">
+
+                <!-- Empieza  aquí  -->
+                <div class="box">
+                    <img src="{% static 'core/img/doctor-1.jpg' %}" alt="">                
+                    
+                    <div class="content">
+                        <a>
+                            <h2>Ricardo Vidal</h2>
+                        </a>
+                        <p>Médico General</p>
+
+                        <!-- card icons  -->
+                        <div class="icons">
+                            <a class="fab fa-facebook-f"></a>
+                            <a class="fab fa-instagram"></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end here  -->
+
+                 <!-- start here  -->
+                 <div class="box">
+                    <img src="{% static 'core/img/doctor-2.jpg' %}" alt="">                
+                    
+                    <div class="content">
+                        <a>
+                            <h2>Janet Barria</h2>
+                        </a>
+                        <p>Ginecóloga</p>
+
+                        <!-- card icons  -->
+                        <div class="icons">
+                            <a class="fab fa-facebook-f"></a>
+                            <a class="fab fa-instagram"></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end here  -->
+
+                 <!-- start here  -->
+                 <div class="box">
+                    <img src="{% static 'core/img/doctor-3.jpg' %}" alt="">                
+                    
+                    <div class="content">
+                        <a>
+                            <h2>Joaquín Santis</h2>
+                        </a>
+                        <p>Kinesiólogo</p>
+
+                        <!-- card icons  -->
+                        <div class="icons">
+                            <a class="fab fa-facebook-f"></a>
+                            
+                            <a class="fab fa-instagram"></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end here  -->
+
+            </div>
+        </div>
+    </section>
+    <!-- card section end  -->
       {% endblock %}
    
