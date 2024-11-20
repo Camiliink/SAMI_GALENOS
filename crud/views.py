@@ -4,6 +4,7 @@ from .models import Usuario
 from .forms import UsuarioForm
 from django.shortcuts import render
 from .forms import LoginForm
+from django.contrib.auth import logout
 
 def login(request):
     if request.method == 'POST':
@@ -61,3 +62,7 @@ def eliminar(request,code):
     usuario= Usuario.objects.get(code=code)
     usuario.delete()
     return redirect('usuarios')
+
+def cerrar_sesion(request):
+    request.session.flush()
+    return redirect('login')

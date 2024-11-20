@@ -29,20 +29,39 @@
     <body>
         <nav class="navbar navbar-expand navbar-light bg-primary">
             <div class="nav navbar-nav">
-                <a class="navbar-brand" href="{% url 'inicio' %}" style="color: white; font-weight: bolder; font-size: 30px;">GALENOS Centro Médico</a>
-                <a class="nav-item nav-link active" href="{% url 'inicio' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Inicio</a>
-                <a class="nav-item nav-link active" href="{% url 'nosotros' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Nosotros</a>
+                <a class="navbar-brand text-white fw-bold fs-3" href="{% url 'inicio' %}">
+                    GALENOS Centro Médico
+                </a>
+                <a class="nav-item nav-link text-white fw-bold fs-5" href="{% url 'inicio' %}" aria-current="page">
+                    Inicio
+                </a>
+                <a class="nav-item nav-link text-white fw-bold fs-5" href="{% url 'nosotros' %}" aria-current="page">
+                    Nosotros
+                </a>
                 {% if request.session.tipo_usuario == 'administrador' %}
-                    <a class="nav-item nav-link active" href="{% url 'usuarios' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Usuarios</a>
+                    <a class="nav-item nav-link text-white fw-bold fs-5" href="{% url 'usuarios' %}" aria-current="page">
+                        Usuarios
+                    </a>
                 {% elif request.session.tipo_usuario == 'paciente' %}
-                    <a class="nav-item nav-link active" href="{% url 'hora' %}" aria-current="page" style="color: white; font-weight: bold; font-size: 22px;">Hora</a>
+                    <a class="nav-item nav-link text-white fw-bold fs-5" href="{% url 'hora' %}" aria-current="page">
+                        Hora
+                    </a>
                 {% endif %}
             </div>
         
-            <div class="nav navbar-nav ms-auto"> 
-                <a class="nav-item nav-link active" href="{% url 'login' %}" aria-current="page"  style="color: white; font-weight: bold; font-size: 22px; margin-left: 10px;">Cerrar sesión</a>
+            <div class="nav navbar-nav ms-auto">
+                {% if request.session.tipo_usuario %}
+                    <a class="nav-item nav-link text-white fw-bold fs-5 ms-2" href="{% url 'logout' %}" aria-current="page">
+                        Cerrar sesión
+                    </a>
+                {% else %}
+                    <a class="nav-item nav-link text-white fw-bold fs-5 ms-2" href="{% url 'login' %}" aria-current="page">
+                        Iniciar sesión
+                    </a>
+                {% endif %}
             </div>
         </nav>
+        
         
 
 
