@@ -11,7 +11,7 @@ TIPO_USUARIO_CHOICES = [
 
 class Usuario(models.Model):
     code = models.AutoField(primary_key=True, verbose_name="codigo")
-    rut = models.CharField(max_length=12)
+    rut = models.CharField(max_length=12, db_index=True)
     nombre_usuario = models.CharField(max_length=20, verbose_name="Nombre Usuario")
     nombre_completo = models.CharField(max_length=50, verbose_name="Nombre Completo")
     correo = models.EmailField(max_length=100, blank=True, null=True)  # Campo de correo

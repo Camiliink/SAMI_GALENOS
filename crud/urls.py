@@ -14,5 +14,6 @@ urlpatterns = [
     path('usuarios/crear/', views.crear, name='crear'),  # Crear usuario
     path('usuarios/editar/<int:code>/', views.editar, name='editar'),  # Editar usuario específico
     path('usuarios/eliminar/<int:code>/', views.eliminar, name='eliminar'),  # Eliminar usuario específico
-    path('logout/', cerrar_sesion, name='logout'),
+    path('logout', cerrar_sesion, name='logout'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

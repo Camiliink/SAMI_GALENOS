@@ -1,63 +1,57 @@
 {% extends "base.html" %}
 
-
 {% block titulo %} Lista de Usuarios {% endblock %}
 
-    {% block contenido %} 
-     
-    <div class="card">
-        <div class="card-header">
-            <a name=""
-                id=""
-                class="btn btn-success"
-                href="{% url 'crear' %}"
-                role="button">Agregar nuevo usuario</a
-            >
-            
-        </div>
-        <div class="card-body">
-            <h4 class="card-title">Usuarios</h4>
+{% block contenido %}
+<div class="card">
+    <div class="card-header">
+        <a class="btn btn-success" href="{% url 'crear' %}" role="button">Agregar nuevo usuario</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Usuarios</h4>
 
-            <div class="table-responsive">
-                <table class="table table-primary">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">RUT</th>
-                            <th scope="col">Nombre Completo</th>
-                            <th scope="col">Nombre de Usuario</th>
-                            <th scope="col">Tipo de Usuario</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {% for usuario in usuarios %}
-                        <tr class="">
-                            <td scope="row">{{ usuario.code }}</td>
-                            <td>{{ usuario.rut }}</td>
-                            <td>{{ usuario.nombre_completo }}</td>
-                            <td>{{ usuario.nombre_usuario }}</td>
-                            <td>{{ usuario.tipo_usuario }}</td>
-                            <td> 
-                                <a name="" id="" class="btn btn-info" href="{% url 'editar' usuario.code %}" role="button">Editar</a>
-                                <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' usuario.code %}" role="button">Borrar</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <!-- Formulario de búsqueda -->
+        <form method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="buscar_rut" placeholder="Buscar por RUT" value="{{ busqueda_rut }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
             </div>
-            
+        </form>
 
-
-        </div>
-        <div class="card-footer text-muted">
-            SAMI System
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">RUT</th>
+                        <th scope="col">Nombre Completo</th>
+                        <th scope="col">Nombre de Usuario</th>
+                        <th scope="col">Tipo de Usuario</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td scope="row">{{ usuario.code }}</td>
+                        <td>{{ usuario.rut }}</td>
+                        <td>{{ usuario.nombre_completo }}</td>
+                        <td>{{ usuario.nombre_usuario }}</td>
+                        <td>{{ usuario.tipo_usuario }}</td>
+                        <td>
+                            <a class="btn btn-info" href="{% url 'editar' usuario.code %}" role="button">Editar</a>
+                            <a class="btn btn-danger" href="{% url 'eliminar' usuario.code %}" role="button">Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    
-
-
-    
-    {% endblock %}
+    <div class="card-footer text-muted">
+        SAMI System
+    </div>
+</div>
+{% endblock %}

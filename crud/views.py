@@ -30,10 +30,29 @@ def nosotros(request):
     return render(request, 'paginas/nosotros.html')
 def hora(request):
     return render(request, 'paginas/hora.html')
-def usuarios(request):
-    usuarios= Usuario.objects.all()
+from django.shortcuts import render
+from .models import Usuario
 
-    return render(request, 'usuarios/index.html', {'usuarios': usuarios})
+def usuarios(request):
+    # Obtener el parámetro de búsqueda del RUT
+    busqueda_rut = request.GET.get('buscar_rut', '').strip()
+
+    if busqueda_rut:
+        # Primero busca el usuario con el RUT exacto
+        usuarios_exactos = Usuario.objects.filter(rut=busqueda_rut)
+
+        # Luego busca los usuarios que contengan el RUT (sin distinción de mayúsculas/minúsculas)
+        usuarios_restantes = Usuario.objects.filter(rut__icontains=busqueda_rut).exclude(rut=busqueda_rut)
+
+        # Combina ambos conjuntos de usuarios, primero los exactos, luego los demás
+        usuarios = list(usuarios_exactos) + list(usuarios_restantes)
+    else:
+        # Si no hay búsqueda, mostrar todos los usuarios
+        usuarios = Usuario.objects.all()
+
+    # Renderiza la plantilla pasando los usuarios y la búsqueda
+    return render(request, 'usuarios/index.html', {'usuarios': usuarios, 'busqueda_rut': busqueda_rut})
+
 
 def crear(request):
     print('entró a crear')
@@ -66,3 +85,5 @@ def eliminar(request,code):
 def cerrar_sesion(request):
     request.session.flush()
     return redirect('login')
+
+
