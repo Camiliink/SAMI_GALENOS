@@ -1,7 +1,7 @@
 # En forms.py
 from django import forms
-from .models import Usuario, TIPO_USUARIO_CHOICES  # Importa el listado de opciones
-
+from .models import Usuario, TIPO_USUARIO_CHOICES , ReservarCita,Especialidad_medico
+from django import forms
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
@@ -40,3 +40,29 @@ class LoginForm(forms.Form):
         if not Usuario.objects.filter(nombre_usuario=nombre_usuario, contrasenna=contrasenna).exists():
             raise forms.ValidationError("Usuario o contraseña incorrectos.")
         return cleaned_data
+
+
+
+class ReservarCitaForm(forms.ModelForm):
+    class Meta:
+        model = ReservarCita
+        fields = ['nombre_paciente', 'rut', 'fecha', 'hora', 'especialidad', 'medico', 'email', 'centro_medico']
+
+    # Validación para evitar citas duplicadas en el mismo horario
+    def clean_hora(self):
+        hora = self.cleaned_data.get('hora')
+        fecha = self.cleaned_data.get('fecha')
+        if ReservarCita.objects.filter(fecha=fecha, hora=hora).exists():
+            raise forms.ValidationError('Ya hay una cita reservada para este horario.')
+        return hora
+
+    # Inicialización del formulario para filtrar médicos según especialidad
+    def __init__(self, *args, **kwargs):
+        especialidad_medico = kwargs.pop('especialidad', None)  # Recibir la especialidad como parámetro
+        super().__init__(*args, **kwargs)
+
+        # Filtramos los médicos por la especialidad seleccionada
+        if especialidad_medico:
+            self.fields['medico'].queryset = Usuario.objects.filter(tipo_usuario='medico', especialidadmedico__especialidad=especialidad_medico)
+        else:
+            self.fields['medico'].queryset = Usuario.objects.filter(tipo_usuario='medico')

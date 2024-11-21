@@ -4,8 +4,9 @@ from .models import Usuario
 from .forms import UsuarioForm
 from django.shortcuts import render
 from .forms import LoginForm
-from django.contrib.auth import logout
-
+from .forms import ReservarCitaForm
+from django.contrib import messages  
+from .models import Especialidad_medico
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -86,4 +87,17 @@ def cerrar_sesion(request):
     request.session.flush()
     return redirect('login')
 
+def hora(request):
+    especialidad = request.GET.get('especialidad')  # Obtener la especialidad seleccionada
+    if request.method == 'POST':
+        form = ReservarCitaForm(request.POST, especialidad=especialidad)  # Pasar la especialidad al formulario
+        if form.is_valid():
+            form.save()  # Guarda la cita
+            messages.success(request, 'Cita reservada con éxito.')  # Mensaje de éxito
+            return redirect('hora')  # Redirige a la misma página
+        else:
+            messages.error(request, 'Hubo un error al reservar la cita. Por favor, revisa los campos.')  # Mensaje de error
+    else:
+        form = ReservarCitaForm()
 
+    return render(request, 'paginas/hora.html', {'form': form})
