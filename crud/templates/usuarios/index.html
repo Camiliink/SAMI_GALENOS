@@ -1,21 +1,31 @@
+
 {% extends "base.html" %}
 
 {% block titulo %} Lista de Usuarios {% endblock %}
 
 {% block contenido %}
 <div class="card">
-    <div class="card-header">
-        <a class="btn btn-success" href="{% url 'crear' %}" role="button">Agregar nuevo usuario</a>
-    </div>
     <div class="card-body">
         <h4 class="card-title">Usuarios</h4>
 
         <!-- Formulario de búsqueda -->
         <form method="get" class="mb-4">
             <div class="input-group">
+                <!-- Campo de búsqueda -->
                 <input type="text" class="form-control" name="buscar_rut" placeholder="Buscar por RUT" value="{{ busqueda_rut }}">
+        
+                <!-- Botón de búsqueda con ícono -->
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i> Buscar
+                    </button>
+                </div>
+        
+                <!-- Botón para agregar un nuevo usuario -->
+                <div class="input-group-append">
+                    <a class="btn btn-success" href="{% url 'crear' %}" role="button">
+                        <i class="bi bi-person-plus"></i> Agregar nuevo usuario
+                    </a>
                 </div>
             </div>
         </form>

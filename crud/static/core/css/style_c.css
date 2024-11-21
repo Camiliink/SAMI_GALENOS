@@ -1,0 +1,294 @@
+/* style_c.css */
+
+/* Global */
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+h5, .fw-bold {
+    color: #132CAA;
+}
+
+/* Calendar */
+.calendar {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar .month {
+    font-size: 1.2rem;
+    color: #1A1A1A;
+    text-align: center;
+}
+
+.calendar .weekdays {
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.calendar .weekdays div {
+    display: inline-block;
+    width: 13%;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.calendar .days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.calendar .days div {
+    width: calc(14% - 10px);
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: #f0f0f0;
+    color: #1A1A1A;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.calendar .days div:hover {
+    background-color: #007bff;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.calendar .days div.today {
+    background-color: #132CAA;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Opacidad para días del mes anterior y siguiente */
+.calendar .days div.prev-month-day,
+.calendar .days div.next-month-day {
+    opacity: 0.5;
+    color: #888;
+}
+
+.calendar .days div.prev-month-day:hover,
+.calendar .days div.next-month-day:hover {
+    background-color: #ddd;
+}
+
+/* Controls */
+.goto-today input {
+    width: 100px;
+    padding: 2px 5px;
+    font-size: 0.9rem;
+}
+
+.goto-today button {
+    font-size: 0.9rem;
+}
+
+/* Event List */
+.events {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.events .event {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Add Event */
+.add-event-wrapper {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.add-event-wrapper input {
+    padding: 5px;
+    font-size: 0.9rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.add-event-wrapper input:focus {
+    outline: none;
+    border-color: #132CAA;
+}
+
+.add-event-btn {
+    background-color: #37A7C6;
+    color: #ffffff;
+    border: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.add-event-btn:hover {
+    background-color: #132CAA;
+}
+
+/* Add Button */
+.add-event.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.add-event.btn:hover {
+    transform: scale(1.1);
+}
+
+/* Form Styling */
+.form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h3 {
+    color: #132CAA;
+    margin-bottom: 20px;
+}
+
+.form-container .form-group {
+    margin-bottom: 15px;
+}
+
+.form-container .form-group label {
+    font-weight: bold;
+    color: #132CAA;
+}
+
+.form-container .form-group input,
+.form-container .form-group select {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.form-container .form-group input:focus,
+.form-container .form-group select:focus {
+    outline: none;
+    border-color: #132CAA;
+}
+
+.form-container .form-group a {
+    color: #132CAA;
+}
+
+.form-container .reserve-btn {
+    background-color: #37A7C6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container .reserve-btn:hover {
+    background-color: #132CAA;
+}
+
+/* Bootstrap Button Styling */
+.btn-outline-primary {
+    color: #132CAA;
+    border-color: #132CAA;
+}
+
+.btn-outline-primary:hover {
+    background-color: #132CAA;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .calendar .days div {
+        width: calc(14% - 5px);
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .add-event.btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .form-container {
+        margin-top: 20px;
+    }
+}
+/* Asegura que el formulario y el calendario estén alineados */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Espaciado entre las columnas */
+.col-lg-7, .col-lg-5 {
+    margin-bottom: 20px;
+}
+
+/* Contenedor del formulario */
+.form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Mejorar la alineación en pantallas pequeñas */
+@media (max-width: 768px) {
+    .col-lg-7, .col-lg-5 {
+        margin-bottom: 20px;
+    }
+}
