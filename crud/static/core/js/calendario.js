@@ -19,9 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalDays = lastDayOfMonth.getDate(); // Total de días en el mes
         const firstDayOfWeek = firstDayOfMonth.getDay(); // Día de la semana en que comienza el mes
 
-        dateDisplay.textContent = `${firstDayOfMonth.toLocaleString('default', { month: 'long' })} ${year}`;
-
-        // Limpiar los días previos
+        dateDisplay.textContent = `${String(firstDayOfMonth.getDate()).padStart(2, '0')}/${String(firstDayOfMonth.getMonth() + 1).padStart(2, '0')}/${year}`;
         daysContainer.innerHTML = "";
 
         // Mostrar los días del mes anterior (si es necesario para completar la primera semana)
@@ -39,7 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
             dayCell.classList.add("day");
             dayCell.addEventListener("click", () => {
                 // Al hacer clic, actualizamos el campo de fecha
-                dateField.value = `${day} ${firstDayOfMonth.toLocaleString('default', { month: 'short' })} ${year}`;
+                const selectedDate = new Date(year, month, day);
+                const formattedDate = `${String(selectedDate.getDate()).padStart(2, '0')}/${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${selectedDate.getFullYear()}`;
+                dateField.value = formattedDate; // Mostrar la fecha en formato dd/mm/yyyy
             });
             daysContainer.appendChild(dayCell);
         }

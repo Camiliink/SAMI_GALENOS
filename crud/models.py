@@ -27,20 +27,19 @@ class Usuario(models.Model):
     def __str__(self):
         return f"Nombre: {self.nombre_completo} - Nombre Usuario: {self.nombre_usuario} - Tipo Usuario: {self.tipo_usuario}"
 
-class Especialidad_medico(models.Model):
+class EspecialidadMedico(models.Model):
     ESPECIALIDAD_CHOICES = [
         ('cardiologia', 'Cardiología'),
         ('pediatria', 'Pediatría'),
         ('dermatologia', 'Dermatología'),
-        # Agregar más especialidades según sea necesario
     ]
     
-    medico = models.CharField(
-        max_length=50, 
-        choices=[(user.nombre_completo, user.nombre_completo) for user in Usuario.objects.filter(tipo_usuario='medico')],
+    medico = models.ForeignKey(
+        Usuario, 
+        limit_choices_to={'tipo_usuario': 'medico'},
+        on_delete=models.CASCADE,
         verbose_name="Médico"
     )
-    
     especialidad = models.CharField(
         max_length=50, 
         choices=ESPECIALIDAD_CHOICES, 
@@ -48,11 +47,7 @@ class Especialidad_medico(models.Model):
     )
     
     def __str__(self):
-        return f"{self.medico} - {self.especialidad}"
-
-    class Meta:
-        verbose_name = "Especialidad del Médico"
-        verbose_name_plural = "Especialidades de los Médicos"
+        return f"{self.medico.nombre_completo} - {self.especialidad}"
 
 class CentroMedico(models.Model):
     CENTRO_MEDICO_CHOICES = [
@@ -67,21 +62,22 @@ class CentroMedico(models.Model):
         return self.nombre
 
 class ReservarCita(models.Model):
-    # Usamos CharField para almacenar solo el nombre completo del médico
-    medico = models.CharField(
-        max_length=50, 
-        choices=[(user.nombre_completo, user.nombre_completo) for user in Usuario.objects.filter(tipo_usuario='medico')],
+    medico = models.ForeignKey(
+        Usuario,
+        limit_choices_to={'tipo_usuario': 'medico'},
+        on_delete=models.CASCADE,
         verbose_name="Médico"
     )
-
     nombre_paciente = models.CharField(max_length=100)
-    rut = models.CharField(max_length=12, unique=True) # RUT del paciente
+    rut = models.CharField(max_length=12, unique=True) 
     fecha = models.DateField()
     hora = models.TimeField()
-    especialidad = models.CharField(max_length=50, choices=Especialidad_medico.ESPECIALIDAD_CHOICES)
+    especialidad = models.ForeignKey(
+        EspecialidadMedico,
+        on_delete=models.CASCADE,
+        verbose_name="Especialidad"
+    )
     email = models.EmailField()
-    
-    # Relación con Centro Médico
     centro_medico = models.ForeignKey(
         CentroMedico, 
         on_delete=models.CASCADE,

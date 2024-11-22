@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Usuario
 from .forms import UsuarioForm
-from django.shortcuts import render
 from .forms import LoginForm
-from .forms import ReservarCitaForm
+from .forms import ReservaCitaForm
 from django.contrib import messages  
-from .models import Especialidad_medico
+from .models import  ReservarCita, EspecialidadMedico, Usuario, CentroMedico
+
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -88,16 +87,36 @@ def cerrar_sesion(request):
     return redirect('login')
 
 def hora(request):
-    especialidad = request.GET.get('especialidad')  # Obtener la especialidad seleccionada
-    if request.method == 'POST':
-        form = ReservarCitaForm(request.POST, especialidad=especialidad)  # Pasar la especialidad al formulario
-        if form.is_valid():
-            form.save()  # Guarda la cita
-            messages.success(request, 'Cita reservada con éxito.')  # Mensaje de éxito
-            return redirect('hora')  # Redirige a la misma página
-        else:
-            messages.error(request, 'Hubo un error al reservar la cita. Por favor, revisa los campos.')  # Mensaje de error
-    else:
-        form = ReservarCitaForm()
+    especialidad_seleccionada = request.GET.get('especialidad', '')
+    doctor_seleccionado = request.GET.get('doctor', '')
 
-    return render(request, 'paginas/hora.html', {'form': form})
+    # Obtener todas las especialidades disponibles
+    especialidades = EspecialidadMedico.ESPECIALIDAD_CHOICES
+
+    # Filtrar médicos según la especialidad seleccionada
+    medicos = Usuario.objects.filter(tipo_usuario='medico')
+    if especialidad_seleccionada:
+        medicos = medicos.filter(especialidadmedico__especialidad=especialidad_seleccionada)
+
+    no_medicos_disponibles = not medicos.exists()
+
+    # Inicializar el formulario
+    if request.method == "POST":
+        form = ReservaCitaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Cita reservada con éxito.")
+            return redirect('hora')  # Redirigir después de reservar
+        else:
+            messages.error(request, "Por favor, corrige los errores en el formulario.")
+    else:
+        form = ReservaCitaForm()
+
+    return render(request, 'paginas/hora.html', {
+        'form': form,
+        'medicos': medicos,
+        'especialidades': especialidades,
+        'especialidad_seleccionada': especialidad_seleccionada,
+        'doctor_seleccionado': doctor_seleccionado,
+        'no_medicos_disponibles': no_medicos_disponibles,
+    })

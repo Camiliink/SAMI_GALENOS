@@ -57,50 +57,78 @@
             <div class="col-lg-5 col-md-6">
                 <div class="form-container">
                     <h3>Reservar Cita</h3>
-                    <form method="POST" action="{% url 'hora' %}">
+                    <form method="GET" action="{% url 'hora' %}">
                         {% csrf_token %}
+                
+                        <!-- Campo Nombre del Paciente -->
                         <div class="form-group mb-3">
                             <label for="patient-name">Nombre del paciente:</label>
                             <input type="text" id="patient-name" name="patient_name" class="form-control" required>
                         </div>
+                
+                        <!-- Campo RUT -->
                         <div class="form-group mb-3">
                             <label for="rut">RUT:</label>
                             <input type="text" id="rut" name="rut" class="form-control" required>
                         </div>
+                
+                        <!-- Campo Fecha -->
                         <div class="form-group mb-3">
                             <label for="date">Fecha de la cita:</label>
                             <input type="text" id="date" name="date" class="form-control" readonly required>
                         </div>
+                
+                        <!-- Select Especialidad -->
                         <div class="form-group mb-3">
-                            <label for="specialty">Especialidad:</label>
-                                <select id="specialty" name="specialty" class="form-select" required>
-                                    <option value="cardiology">Cardiología</option>
-                                    <option value="neurology">Neurología</option>
-                                    <option value="pediatrics">Pediatría</option>
-                                    <!-- Agregar más especialidades si es necesario -->
-                                </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="doctor">Médico:</label>
-                            <select id="doctor" name="doctor" class="form-select" required>
-                                {% for medico in medicos %}
-                                    <option value="{{ medico.id }}">{{ medico.nombre_completo }}</option>
+                            <label for="id_especialidad">Especialidad:</label>
+                            <select id="id_especialidad" name="especialidad" class="form-select" required onchange="this.form.submit()">
+                                <option value="" disabled selected>Seleccione una especialidad</option>
+                                {% for especialidad in especialidades %}
+                                    <option value="{{ especialidad.0 }}" {% if especialidad.0 == especialidad_seleccionada %}selected{% endif %}>
+                                        {{ especialidad.1 }}
+                                    </option>
                                 {% endfor %}
                             </select>
                         </div>
+                
+                        <!-- Select Médico -->
+                        <div class="form-group mb-3">
+                            <label for="doctor">Médico:</label>
+                            <select id="doctor" name="doctor" class="form-select" required>
+                                <option value="" disabled selected>Seleccione un médico</option>
+                
+                                <!-- Si no hay médicos disponibles para la especialidad seleccionada -->
+                                {% if no_medicos_disponibles %}
+                                    <option disabled>No hay médicos disponibles para esta especialidad</option>
+                                {% else %}
+                                    <!-- Mostrar los médicos disponibles para la especialidad seleccionada -->
+                                    {% for medico in medicos %}
+                                        <option value="{{ medico.id }}" {% if medico.id == doctor_seleccionado %}selected{% endif %}>
+                                            {{ medico.nombre_completo }}
+                                        </option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                
+                        <!-- Campo Email -->
                         <div class="form-group mb-3">
                             <label for="email">Email:</label>
                             <input type="email" id="email" name="email" class="form-control" required>
                         </div>
+                
+                        <!-- Aceptación de términos -->
                         <div class="form-group mb-3">
                             <label>
                                 <input type="checkbox" id="terms" name="terms" required>
                                 Acepto los <a href="#">términos y condiciones</a>
                             </label>
                         </div>
+                
+                        <!-- Botón de Reservar -->
                         <button type="submit" id="reserve-btn" class="btn btn-primary w-100">Reservar Cita</button>
                     </form>
-                </div>
+                </div>                                            
             </div>
         </div>
     </div>
