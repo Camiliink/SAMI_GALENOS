@@ -20,121 +20,172 @@
     <title>Calendario</title>
 </head>
 
-<section id="calendar" class="calendar-section py-4">
+<section id="reserva-cita" class="reserva-cita-section py-4" aria-labelledby="reserva-cita-title">
     <div class="container">
-        <div class="row">
-            <!-- Columna izquierda: Calendario -->
-            <div class="col-lg-7 col-md-6">
-                <div class="calendar border rounded shadow-sm p-3">
-                    <div class="month d-flex justify-content-between align-items-center mb-3">
-                        <button class="btn btn-sm btn-outline-primary prev">
-                            <i class="fas fa-angle-left"></i>
-                        </button>
-                        <div class="date fs-5 fw-bold">Diciembre 2023</div>
-                        <button class="btn btn-sm btn-outline-primary next">
-                            <i class="fas fa-angle-right"></i>
-                        </button>
-                    </div>
-                    <div class="weekdays d-flex justify-content-between text-center fw-bold">
-                        <div>Dom</div>
-                        <div>Lun</div>
-                        <div>Mar</div>
-                        <div>Mié</div>
-                        <div>Jue</div>
-                        <div>Vie</div>
-                        <div>Sáb</div>
-                    </div>
-                    <div class="days mt-3">
-                        <!-- Aquí se generarán dinámicamente los días -->
-                    </div>
-                    <div class="goto-today d-flex justify-content-between align-items-center mt-4">
-                        <button class="today-btn btn btn-sm btn-secondary">Hoy</button>
+        <h2 id="reserva-cita-title" class="text-center mb-4">Reservar Cita Médica</h2>
+
+        <!-- Mostrar los errores del formulario si existen -->
+        {% if formulario.errors %}
+            <div class="alert alert-danger">
+                <strong>¡Error!</strong> Hay algunos problemas con el formulario:
+                <ul>
+                    {% for field in formulario %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'hora' %}">
+            {% csrf_token %}
+            <div class="row">
+                <!-- Área 1: Calendario -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <section id="calendar" class="calendar-section">
+                        <div class="calendar border rounded shadow-sm p-3" role="application" aria-label="Calendario de reservas">
+                            <div class="month d-flex justify-content-between align-items-center mb-3">
+                                <button class="btn btn-sm btn-outline-primary prev" type="button" aria-label="Mes anterior">
+                                    <i class="fas fa-angle-left"></i>
+                                </button>
+                                <div class="date fs-5 fw-bold">Diciembre 2023</div>
+                                <button class="btn btn-sm btn-outline-primary next" type="button" aria-label="Mes siguiente">
+                                    <i class="fas fa-angle-right"></i>
+                                </button>
+                            </div>
+                            <div class="weekdays d-flex justify-content-between text-center fw-bold">
+                                <div>Dom</div>
+                                <div>Lun</div>
+                                <div>Mar</div>
+                                <div>Mié</div>
+                                <div>Jue</div>
+                                <div>Vie</div>
+                                <div>Sáb</div>
+                            </div>
+                            <div class="days mt-3">
+                                <!-- Aquí se generarán dinámicamente los días -->
+                            </div>
+                            <div class="goto-today d-flex justify-content-between align-items-center mt-4">
+                                <button class="today-btn btn btn-sm btn-secondary" type="button" aria-label="Ir a hoy">Hoy</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Selección de Hora -->
+                    <div class="hora-selector mt-4">
+                        <h4 class="border-bottom pb-2">Seleccionar Hora</h4>
+                        <div class="d-flex">
+                            <select id="hora" name="hora" class="form-control" required>
+                                <!-- Opciones de horas -->
+                            </select>
+                            <span>:</span>
+                            <select id="minutos" name="minutos" class="form-control" required>
+                                <!-- Opciones de minutos -->
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Columna derecha: Formulario -->
-            <div class="col-lg-5 col-md-6">
-                <div class="form-container">
-                    <h3>Reservar Cita</h3>
-                    <form method="GET" action="{% url 'hora' %}">
-                        {% csrf_token %}
-                
-                        <!-- Campo Nombre del Paciente -->
+                <!-- Área 2: Selección de datos -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="form-container border rounded shadow-sm p-3">
+                        <h3>Detalles de Reserva</h3>
+                        <div class="form-area mb-4">
+                            <h4 class="border-bottom pb-2">Especialidad y Centro Médico</h4>
+                            
+                            <div class="form-group mb-3">
+                                <label for="id_especialidad">Especialidad:</label>
+                                <select id="id_especialidad" name="especialidad" class="form-select" required onchange="this.form.submit()">
+                                    <option value="" disabled selected>Seleccione una especialidad</option>
+                                    {% for especialidad in especialidades %}
+                                        <option value="{{ especialidad.0 }}" {% if especialidad.0 == especialidad_seleccionada %}selected{% endif %}>
+                                            {{ especialidad.1 }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        
+                            <div class="form-group mb-3">
+                                <label for="doctor">Médico:</label>
+                                <select id="doctor" name="doctor" class="form-select" required>
+                                    <option value="" disabled selected>Seleccione un médico</option>
+                    
+                                    <!-- Si no hay médicos disponibles para la especialidad seleccionada -->
+                                    {% if no_medicos_disponibles %}
+                                        <option disabled>No hay médicos disponibles para esta especialidad</option>
+                                    {% else %}
+                                        <!-- Mostrar los médicos disponibles para la especialidad seleccionada -->
+                                        {% for medico in medicos %}
+                                            <option value="{{ medico.id }}" {% if medico.id == doctor_seleccionado %}selected{% endif %}>
+                                                {{ medico.nombre_completo }}
+                                            </option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        
+                            <div class="form-group mb-3">
+                                <label for="centro_medico">Centro Médico:</label>
+                                <select name="centro_medico">
+                                    <option value="">Seleccionar Centro Médico</option>
+                                    {% for centro in centros_medicos %}
+                                        <option value="{{ centro.id }}">{{ centro.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Área 3: Información del paciente -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="info-container border rounded shadow-sm p-3">
+                        <h4 class="border-bottom pb-2">Información del Paciente</h4>
                         <div class="form-group mb-3">
                             <label for="patient-name">Nombre del paciente:</label>
                             <input type="text" id="patient-name" name="patient_name" class="form-control" required>
                         </div>
-                
-                        <!-- Campo RUT -->
                         <div class="form-group mb-3">
                             <label for="rut">RUT:</label>
                             <input type="text" id="rut" name="rut" class="form-control" required>
                         </div>
-                
-                        <!-- Campo Fecha -->
                         <div class="form-group mb-3">
                             <label for="date">Fecha de la cita:</label>
                             <input type="text" id="date" name="date" class="form-control" readonly required>
                         </div>
-                
-                        <!-- Select Especialidad -->
-                        <div class="form-group mb-3">
-                            <label for="id_especialidad">Especialidad:</label>
-                            <select id="id_especialidad" name="especialidad" class="form-select" required onchange="this.form.submit()">
-                                <option value="" disabled selected>Seleccione una especialidad</option>
-                                {% for especialidad in especialidades %}
-                                    <option value="{{ especialidad.0 }}" {% if especialidad.0 == especialidad_seleccionada %}selected{% endif %}>
-                                        {{ especialidad.1 }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                
-                        <!-- Select Médico -->
-                        <div class="form-group mb-3">
-                            <label for="doctor">Médico:</label>
-                            <select id="doctor" name="doctor" class="form-select" required>
-                                <option value="" disabled selected>Seleccione un médico</option>
-                
-                                <!-- Si no hay médicos disponibles para la especialidad seleccionada -->
-                                {% if no_medicos_disponibles %}
-                                    <option disabled>No hay médicos disponibles para esta especialidad</option>
-                                {% else %}
-                                    <!-- Mostrar los médicos disponibles para la especialidad seleccionada -->
-                                    {% for medico in medicos %}
-                                        <option value="{{ medico.id }}" {% if medico.id == doctor_seleccionado %}selected{% endif %}>
-                                            {{ medico.nombre_completo }}
-                                        </option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>
-                        </div>
-                
-                        <!-- Campo Email -->
                         <div class="form-group mb-3">
                             <label for="email">Email:</label>
                             <input type="email" id="email" name="email" class="form-control" required>
                         </div>
-                
-                        <!-- Aceptación de términos -->
                         <div class="form-group mb-3">
                             <label>
                                 <input type="checkbox" id="terms" name="terms" required>
                                 Acepto los <a href="#">términos y condiciones</a>
                             </label>
                         </div>
-                
-                        <!-- Botón de Reservar -->
-                        <button type="submit" id="reserve-btn" class="btn btn-primary w-100">Reservar Cita</button>
-                    </form>
-                </div>                                            
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <!-- Botón Reservar -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Reservar</button>
+            </div>
+        </form>
     </div>
 </section>
 
 {% block extra_js %}
+<script>
+    document.getElementById('id_especialidad').addEventListener('change', function() {
+        var especialidad = this.value;
+        var url = new URL(window.location.href);
+        url.searchParams.set('especialidad', especialidad);  // Actualiza la URL con el parámetro especialidad
+        window.location.href = url;  // Redirige a la misma página con el parámetro actualizado
+    });
+</script>
+<script src="{% static 'core/js/hora.js' %}"></script>
 <script src="{% static 'core/js/calendario.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

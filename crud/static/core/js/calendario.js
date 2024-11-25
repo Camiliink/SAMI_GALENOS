@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalDays = lastDayOfMonth.getDate(); // Total de días en el mes
         const firstDayOfWeek = firstDayOfMonth.getDay(); // Día de la semana en que comienza el mes
 
+        // Actualiza el display de la fecha
         dateDisplay.textContent = `${String(firstDayOfMonth.getDate()).padStart(2, '0')}/${String(firstDayOfMonth.getMonth() + 1).padStart(2, '0')}/${year}`;
         daysContainer.innerHTML = "";
 
@@ -38,8 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
             dayCell.addEventListener("click", () => {
                 // Al hacer clic, actualizamos el campo de fecha
                 const selectedDate = new Date(year, month, day);
-                const formattedDate = `${String(selectedDate.getDate()).padStart(2, '0')}/${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${selectedDate.getFullYear()}`;
-                dateField.value = formattedDate; // Mostrar la fecha en formato dd/mm/yyyy
+                const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`; // Formato yyyy-mm-dd
+                console.log("Fecha seleccionada: ", formattedDate); // Verificar que la fecha se está actualizando
+                dateField.value = formattedDate; // Mostrar la fecha en formato yyyy-mm-dd
             });
             daysContainer.appendChild(dayCell);
         }

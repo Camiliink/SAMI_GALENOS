@@ -42,8 +42,6 @@ class LoginForm(forms.Form):
             raise forms.ValidationError("Usuario o contraseña incorrectos.")
         return cleaned_data
 
-
-
 class ReservaCitaForm(forms.ModelForm):
     class Meta:
         model = ReservarCita
@@ -63,22 +61,20 @@ class ReservaCitaForm(forms.ModelForm):
         label="Médico",
     )
 
-    centro_medico = forms.ChoiceField(
-        choices=[('', 'Seleccionar Centro Médico')] + CentroMedico.CENTRO_MEDICO_CHOICES,
+    centro_medico = forms.ModelChoiceField(
+        queryset=CentroMedico.objects.all(),
+        empty_label="Seleccionar Centro Médico",
         widget=forms.Select(attrs={'class': 'form-select'}),
-        label="Centro Médico",
+        label="Centro Médico"
     )
 
     def __init__(self, *args, **kwargs):
-        especialidad = kwargs.pop('especialidad', None)  # Filtrar especialidad si es pasada
+        especialidad = kwargs.pop('especialidad', None)
         super().__init__(*args, **kwargs)
-        # Si hay una especialidad, filtrar las opciones
+
+        # Filtrar especialidad y médicos según especialidad
         if especialidad:
             self.fields['especialidad'].queryset = EspecialidadMedico.objects.filter(especialidad=especialidad)
-            self.fields['medico'].queryset = Usuario.objects.filter(
-                tipo_usuario='medico',
-                especialidadmedico__especialidad=especialidad
-            )
+            self.fields['medico'].queryset = Usuario.objects.filter(tipo_usuario='medico', especialidadmedico__especialidad=especialidad)
         else:
-            # Si no hay especialidad seleccionada, mostrar todas las especialidades
             self.fields['especialidad'].queryset = EspecialidadMedico.objects.all()

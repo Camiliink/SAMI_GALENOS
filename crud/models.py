@@ -50,13 +50,8 @@ class EspecialidadMedico(models.Model):
         return f"{self.medico.nombre_completo} - {self.especialidad}"
 
 class CentroMedico(models.Model):
-    CENTRO_MEDICO_CHOICES = [
-        ('centro1', 'Centro Médico 1'),
-        ('centro2', 'Centro Médico 2'),
-        ('centro3', 'Centro Médico 3'),
-        # Agregar más centros médicos según sea necesario
-    ]
-    nombre = models.CharField(max_length=50, choices=CENTRO_MEDICO_CHOICES, verbose_name="Centro Médico")
+
+    nombre = models.CharField(max_length=50, verbose_name="Centro Médico")
     
     def __str__(self):
         return self.nombre

@@ -53,7 +53,6 @@ def usuarios(request):
     # Renderiza la plantilla pasando los usuarios y la búsqueda
     return render(request, 'usuarios/index.html', {'usuarios': usuarios, 'busqueda_rut': busqueda_rut})
 
-
 def crear(request):
     print('entró a crear')
     print(request.POST)
@@ -90,6 +89,9 @@ def hora(request):
     especialidad_seleccionada = request.GET.get('especialidad', '')
     doctor_seleccionado = request.GET.get('doctor', '')
 
+    # Obtener todos los centros médicos
+    centros_medicos = CentroMedico.objects.all()
+
     # Obtener todas las especialidades disponibles
     especialidades = EspecialidadMedico.ESPECIALIDAD_CHOICES
 
@@ -102,21 +104,31 @@ def hora(request):
 
     # Inicializar el formulario
     if request.method == "POST":
-        form = ReservaCitaForm(request.POST)
-        if form.is_valid():
-            form.save()
+        # Crear una instancia del formulario con los datos recibidos
+        formulario = ReservaCitaForm(request.POST)
+        
+        # Si el formulario es válido, lo guardamos
+        if formulario.is_valid():
+            # Guardar la reserva en la base de datos
+            formulario.save()
+            
+            # Mensaje de éxito
             messages.success(request, "Cita reservada con éxito.")
-            return redirect('hora')  # Redirigir después de reservar
+            
+            # Redirigir a la página actual o a una página de confirmación
+            return redirect('hora')  # O cualquier otra URL que desees redirigir después de guardar
+
         else:
             messages.error(request, "Por favor, corrige los errores en el formulario.")
     else:
-        form = ReservaCitaForm()
+        formulario = ReservaCitaForm()
 
     return render(request, 'paginas/hora.html', {
-        'form': form,
+        'form': formulario,
         'medicos': medicos,
         'especialidades': especialidades,
         'especialidad_seleccionada': especialidad_seleccionada,
         'doctor_seleccionado': doctor_seleccionado,
+        'centros_medicos': centros_medicos,  # Añadido para mostrar los centros médicos
         'no_medicos_disponibles': no_medicos_disponibles,
     })
