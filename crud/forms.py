@@ -46,25 +46,67 @@ class ReservaCitaForm(forms.ModelForm):
     class Meta:
         model = ReservarCita
         fields = ['especialidad', 'medico', 'nombre_paciente', 'rut', 'fecha', 'hora', 'email', 'centro_medico']
+        widgets = {
+            'nombre_paciente': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'patient-name',
+                'placeholder': 'Nombre completo del paciente',
+                'required': True
+            }),
+            'rut': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'rut',
+                'placeholder': 'RUT del paciente',
+                'required': True
+            }),
+            'fecha': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'date',
+                'placeholder': 'Seleccione una fecha',
+                'readonly': True,
+                'required': True
+            }),
+            'hora': forms.TimeInput(attrs={
+                'class': 'form-control',
+                'id': 'hora',
+                'required': True
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'id': 'email',
+                'placeholder': 'Correo electrónico',
+                'required': True
+            }),
+        }
 
     especialidad = forms.ModelChoiceField(
-        queryset=EspecialidadMedico.objects.none(),
-        empty_label="Seleccionar Especialidad",
-        widget=forms.Select(attrs={'class': 'form-select'}),
+        queryset=EspecialidadMedico.objects.all(),
+        empty_label="Seleccione una especialidad",
+        widget=forms.Select(attrs={
+            'class': 'form-select',
+            'id': 'id_especialidad',
+            'onchange': "this.form.submit()"
+        }),
         label="Especialidad",
     )
 
     medico = forms.ModelChoiceField(
         queryset=Usuario.objects.filter(tipo_usuario='medico'),
-        empty_label="Seleccionar Médico",
-        widget=forms.Select(attrs={'class': 'form-select'}),
+        empty_label="Seleccione un médico",
+        widget=forms.Select(attrs={
+            'class': 'form-select',
+            'id': 'doctor',
+        }),
         label="Médico",
     )
 
     centro_medico = forms.ModelChoiceField(
         queryset=CentroMedico.objects.all(),
-        empty_label="Seleccionar Centro Médico",
-        widget=forms.Select(attrs={'class': 'form-select'}),
+        empty_label="Seleccione un centro médico",
+        widget=forms.Select(attrs={
+            'class': 'form-select',
+            'id': 'centro_medico',
+        }),
         label="Centro Médico"
     )
 
@@ -72,9 +114,7 @@ class ReservaCitaForm(forms.ModelForm):
         especialidad = kwargs.pop('especialidad', None)
         super().__init__(*args, **kwargs)
 
-        # Filtrar especialidad y médicos según especialidad
         if especialidad:
-            self.fields['especialidad'].queryset = EspecialidadMedico.objects.filter(especialidad=especialidad)
-            self.fields['medico'].queryset = Usuario.objects.filter(tipo_usuario='medico', especialidadmedico__especialidad=especialidad)
-        else:
-            self.fields['especialidad'].queryset = EspecialidadMedico.objects.all()
+            self.fields['medico'].queryset = Usuario.objects.filter(
+                tipo_usuario='medico', especialidadmedico__especialidad=especialidad
+            )

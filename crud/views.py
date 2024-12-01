@@ -86,6 +86,7 @@ def cerrar_sesion(request):
     return redirect('login')
 
 def hora(request):
+    # Obtener parámetros de la URL
     especialidad_seleccionada = request.GET.get('especialidad', '')
     doctor_seleccionado = request.GET.get('doctor', '')
 
@@ -100,35 +101,33 @@ def hora(request):
     if especialidad_seleccionada:
         medicos = medicos.filter(especialidadmedico__especialidad=especialidad_seleccionada)
 
+    # Verificar si no hay médicos disponibles
     no_medicos_disponibles = not medicos.exists()
 
-    # Inicializar el formulario
+    # Manejar formulario de reserva
     if request.method == "POST":
-        # Crear una instancia del formulario con los datos recibidos
         formulario = ReservaCitaForm(request.POST)
-        
-        # Si el formulario es válido, lo guardamos
         if formulario.is_valid():
             # Guardar la reserva en la base de datos
             formulario.save()
-            
+
             # Mensaje de éxito
             messages.success(request, "Cita reservada con éxito.")
-            
-            # Redirigir a la página actual o a una página de confirmación
-            return redirect('hora')  # O cualquier otra URL que desees redirigir después de guardar
 
+            # Redirigir a la misma página u otra URL
+            return redirect('hora')  # Cambia 'hora' por el nombre de tu URL si es necesario
         else:
             messages.error(request, "Por favor, corrige los errores en el formulario.")
     else:
         formulario = ReservaCitaForm()
 
+    # Renderizar la plantilla con el contexto
     return render(request, 'paginas/hora.html', {
-        'form': formulario,
+        'formulario': formulario,
         'medicos': medicos,
         'especialidades': especialidades,
         'especialidad_seleccionada': especialidad_seleccionada,
         'doctor_seleccionado': doctor_seleccionado,
-        'centros_medicos': centros_medicos,  # Añadido para mostrar los centros médicos
+        'centros_medicos': centros_medicos,
         'no_medicos_disponibles': no_medicos_disponibles,
     })
