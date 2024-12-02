@@ -42,6 +42,7 @@ class LoginForm(forms.Form):
             raise forms.ValidationError("Usuario o contraseña incorrectos.")
         return cleaned_data
 
+
 class ReservaCitaForm(forms.ModelForm):
     class Meta:
         model = ReservarCita
@@ -56,7 +57,7 @@ class ReservaCitaForm(forms.ModelForm):
             'rut': forms.TextInput(attrs={
                 'class': 'form-control',
                 'id': 'rut',
-                'placeholder': 'RUT del paciente',
+                'placeholder': 'RUT del paciente(ej:11111111-1)',
                 'required': True
             }),
             'fecha': forms.TextInput(attrs={
@@ -66,9 +67,10 @@ class ReservaCitaForm(forms.ModelForm):
                 'readonly': True,
                 'required': True
             }),
-            'hora': forms.TimeInput(attrs={
+            'hora': forms.TextInput(attrs={
                 'class': 'form-control',
                 'id': 'hora',
+                'placeholder': 'Seleccionar hora(ej:09:00:00)',
                 'required': True
             }),
             'email': forms.EmailInput(attrs={
@@ -77,8 +79,12 @@ class ReservaCitaForm(forms.ModelForm):
                 'placeholder': 'Correo electrónico',
                 'required': True
             }),
+            'centro_medico': forms.Select(attrs={
+                'class': 'form-select',
+                'id': 'centro_medico',
+            }),
         }
-
+    
     especialidad = forms.ModelChoiceField(
         queryset=EspecialidadMedico.objects.all(),
         empty_label="Seleccione una especialidad",

@@ -19,12 +19,11 @@
     <link rel="stylesheet" href="{% static 'core/css/style_c.css' %}">
     <title>Calendario</title>
 </head>
-
 <section id="reserva-cita" class="reserva-cita-section py-5" aria-labelledby="reserva-cita-title">
     <div class="container">
         <h2 id="reserva-cita-title" class="text-center mb-5">Reservar Cita Médica</h2>
 
-        <!-- Mostrar errores del formulario -->
+        <!-- Mostrar los errores del formulario si existen -->
         {% if formulario.errors %}
             <div class="alert alert-danger">
                 <strong>¡Error!</strong> Hay algunos problemas con el formulario:
@@ -38,59 +37,58 @@
             </div>
         {% endif %}
 
-        <!-- Formulario de Reserva -->
+        <!-- Formulario -->
         <form method="POST" action="{% url 'hora' %}">
             {% csrf_token %}
+        
             <div class="row">
-                <!-- Formulario en la columna izquierda -->
-                <div class="col-lg-6">
-                    <div class="form-group mb-4">
-                        <label for="id_especialidad" class="form-label">Especialidad</label>
+                <div class="col-lg-7">
+                    <!-- Renderizar campos básicos -->
+                    <!-- Campo Especialidad -->
+                    <div class="form-group">
+                        <label for="especialidad">Especialidad</label>
                         {{ formulario.especialidad }}
                     </div>
-
-                    <div class="form-group mb-4">
-                        <label for="id_medico" class="form-label">Médico</label>
+                    <!-- Campo Médico -->
+                    <div class="form-group">
+                        <label for="medico">Médico</label>
                         {{ formulario.medico }}
                     </div>
-
-                    <div class="form-group mb-4">
-                        <label for="id_nombre_paciente" class="form-label">Nombre del Paciente</label>
+                    <!-- Campo Nombre del Paciente -->
+                    <div class="form-group">
+                        <label for="nombre_paciente">Nombre del Paciente</label>
                         {{ formulario.nombre_paciente }}
                     </div>
-
-                    <div class="form-group mb-4">
-                        <label for="id_rut" class="form-label">RUT</label>
+                    <!-- Campo RUT -->
+                    <div class="form-group">
+                        <label for="rut">RUT</label>
                         {{ formulario.rut }}
                     </div>
-
-                    <div class="form-group mb-4">
-                        <label for="id_email" class="form-label">Correo Electrónico</label>
+                    <!-- Campo Correo Electrónico -->
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
                         {{ formulario.email }}
                     </div>
-
-                    <div class="form-group mb-4">
-                        <label for="id_centro_medico" class="form-label">Centro Médico</label>
+                    <!-- Campo Centro Médico -->
+                    <div class="form-group">
+                        <label for="centro_medico">Centro Médico</label>
                         {{ formulario.centro_medico }}
                     </div>
-
-                    <!-- Campo Oculto de Fecha -->
+                    <!-- Campo Hora -->
                     <div class="form-group">
+                        <label for="centro_medico">Hora</label>
+                        {{ formulario.hora }}
+                    </div>
+                    <!-- Campo Fecha -->
+                    <div class="form-group">
+                        <label for="centro_medico">Fecha</label>
                         {{ formulario.fecha }}
                     </div>
-
-                    <!-- Selector de Hora -->
-                    <div class="hora-selector mt-4">
-                        <h4 class="border-bottom pb-2">Seleccionar Hora</h4>
-                        <div class="d-flex">
-                            {{ formulario.hora }}
-                        </div>
-                    </div>
                 </div>
-
-                <!-- Calendario en la columna derecha -->
-                <div class="col-lg-6">
-                    <section id="calendar" class="calendar-section mb-4">
+        
+                <div class="col-lg-5">
+                    <!-- Calendario -->
+                    <section id="calendar" class="calendar-section">
                         <div class="calendar border rounded shadow-sm p-3" role="application" aria-label="Calendario de reservas">
                             <div class="month d-flex justify-content-between align-items-center mb-3">
                                 <button class="btn btn-sm btn-outline-primary prev" type="button" aria-label="Mes anterior">
@@ -101,9 +99,7 @@
                                     <i class="fas fa-angle-right"></i>
                                 </button>
                             </div>
-
-                            <!-- Días de la Semana -->
-                            <div class="weekdays d-flex justify-content-between text-center fw-bold mb-2">
+                            <div class="weekdays d-flex justify-content-between text-center fw-bold">
                                 <div>Dom</div>
                                 <div>Lun</div>
                                 <div>Mar</div>
@@ -112,13 +108,9 @@
                                 <div>Vie</div>
                                 <div>Sáb</div>
                             </div>
-
-                            <!-- Días -->
                             <div class="days mt-3">
-                                <!-- Los días se generarán dinámicamente aquí -->
+                                <!-- Aquí se generarán dinámicamente los días -->
                             </div>
-
-                            <!-- Botón para ir al día actual -->
                             <div class="goto-today d-flex justify-content-between align-items-center mt-4">
                                 <button class="today-btn btn btn-sm btn-secondary" type="button" aria-label="Ir a hoy">Hoy</button>
                             </div>
@@ -126,12 +118,12 @@
                     </section>
                 </div>
             </div>
-
-            <!-- Botón para Reservar -->
+        
+            <!-- Botón Reservar -->
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-primary btn-lg">Reservar</button>
             </div>
-        </form>
+        </form>        
     </div>
 </section>
 

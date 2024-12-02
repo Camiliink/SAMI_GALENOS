@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const firstDayOfWeek = firstDayOfMonth.getDay(); // Día de la semana en que comienza el mes
 
         // Actualiza el display de la fecha
-        dateDisplay.textContent = `${String(firstDayOfMonth.getDate()).padStart(2, '0')}/${String(firstDayOfMonth.getMonth() + 1).padStart(2, '0')}/${year}`;
+        dateDisplay.textContent = `${String(firstDayOfMonth.getMonth() + 1).padStart(2, '0')}/${String(firstDayOfMonth.getDate()).padStart(2, '0')}/${year}`;
         daysContainer.innerHTML = "";
 
         // Mostrar los días del mes anterior (si es necesario para completar la primera semana)
@@ -45,6 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             daysContainer.appendChild(dayCell);
         }
+
+        // Rellenar con días del mes siguiente si la última semana no se llena completamente
+        const remainingCells = 42 - (daysContainer.children.length); // Hay 42 celdas en total (6 semanas x 7 días)
+        for (let i = 1; i <= remainingCells; i++) {
+            const emptyCell = document.createElement("div");
+            emptyCell.classList.add("day", "next-month-day");
+            emptyCell.textContent = i;
+            daysContainer.appendChild(emptyCell);
+        }
+
+        // Aplicar clases para crear el grid visual
+        daysContainer.style.gridTemplateColumns = "repeat(7, 1fr)"; // Crear 7 columnas (uno por día de la semana)
     }
 
     // Función para manejar los cambios de mes
