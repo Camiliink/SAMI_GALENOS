@@ -86,9 +86,9 @@ def cerrar_sesion(request):
     return redirect('login')
 
 def hora(request):
-    # Obtener parámetros de la URL
-    especialidad_seleccionada = request.GET.get('especialidad', '')
-    doctor_seleccionado = request.GET.get('doctor', '')
+    # Obtener parámetros de la URL (con None por defecto en lugar de '')
+    especialidad_seleccionada = request.GET.get('especialidad', None)
+    doctor_seleccionado = request.GET.get('doctor', None)
 
     # Obtener todos los centros médicos
     centros_medicos = CentroMedico.objects.all()
@@ -100,6 +100,10 @@ def hora(request):
     medicos = Usuario.objects.filter(tipo_usuario='medico')
     if especialidad_seleccionada:
         medicos = medicos.filter(especialidadmedico__especialidad=especialidad_seleccionada)
+
+    # Filtrar médicos según el doctor seleccionado
+    if doctor_seleccionado:
+        medicos = medicos.filter(id=doctor_seleccionado)
 
     # Verificar si no hay médicos disponibles
     no_medicos_disponibles = not medicos.exists()
@@ -119,7 +123,10 @@ def hora(request):
         else:
             messages.error(request, "Por favor, corrige los errores en el formulario.")
     else:
-        formulario = ReservaCitaForm()
+        formulario = ReservaCitaForm(initial={
+            'especialidad': especialidad_seleccionada,
+            'medico': doctor_seleccionado,
+        })
 
     # Renderizar la plantilla con el contexto
     return render(request, 'paginas/hora.html', {

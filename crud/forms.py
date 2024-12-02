@@ -57,7 +57,7 @@ class ReservaCitaForm(forms.ModelForm):
             'rut': forms.TextInput(attrs={
                 'class': 'form-control',
                 'id': 'rut',
-                'placeholder': 'RUT del paciente(ej:11111111-1)',
+                'placeholder': 'RUT del paciente (ej: 11111111-1)',
                 'required': True
             }),
             'fecha': forms.TextInput(attrs={
@@ -70,7 +70,7 @@ class ReservaCitaForm(forms.ModelForm):
             'hora': forms.TextInput(attrs={
                 'class': 'form-control',
                 'id': 'hora',
-                'placeholder': 'Seleccionar hora(ej:09:00:00)',
+                'placeholder': 'Seleccionar hora (ej: 09:00:00)',
                 'required': True
             }),
             'email': forms.EmailInput(attrs={
@@ -84,7 +84,7 @@ class ReservaCitaForm(forms.ModelForm):
                 'id': 'centro_medico',
             }),
         }
-    
+
     especialidad = forms.ModelChoiceField(
         queryset=EspecialidadMedico.objects.all(),
         empty_label="Seleccione una especialidad",
@@ -121,6 +121,14 @@ class ReservaCitaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if especialidad:
+            # Filtra médicos según la especialidad seleccionada
             self.fields['medico'].queryset = Usuario.objects.filter(
                 tipo_usuario='medico', especialidadmedico__especialidad=especialidad
             )
+
+        # Asegúrate de pasar la especialidad seleccionada como un valor por defecto
+        if 'especialidad' in self.data:
+            try:
+                self.fields['especialidad'].initial = self.data.get('especialidad')
+            except KeyError:
+                pass

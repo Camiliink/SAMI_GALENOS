@@ -25,7 +25,7 @@ class Usuario(models.Model):
         super(Usuario, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Nombre: {self.nombre_completo} - Nombre Usuario: {self.nombre_usuario} - Tipo Usuario: {self.tipo_usuario}"
+        return self.nombre_completo
 
 class EspecialidadMedico(models.Model):
     ESPECIALIDAD_CHOICES = [
@@ -45,9 +45,9 @@ class EspecialidadMedico(models.Model):
         choices=ESPECIALIDAD_CHOICES, 
         verbose_name="Especialidad"
     )
-    
+
     def __str__(self):
-        return f"{self.medico.nombre_completo} - {self.especialidad}"
+        return dict(self.ESPECIALIDAD_CHOICES).get(self.especialidad, 'No definida')
 
 class CentroMedico(models.Model):
 

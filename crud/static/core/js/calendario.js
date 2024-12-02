@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextButton = calendario.querySelector(".next");
     const dateDisplay = calendario.querySelector(".date");
     const daysContainer = calendario.querySelector(".days");
-    const todayButton = calendario.querySelector(".today-btn");
+    const todayButton = calendario.querySelector("#go-today"); // El botón 'Hoy'
 
     let currentDate = new Date();
 
@@ -19,8 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalDays = lastDayOfMonth.getDate(); // Total de días en el mes
         const firstDayOfWeek = firstDayOfMonth.getDay(); // Día de la semana en que comienza el mes
 
-        // Actualiza el display de la fecha
-        dateDisplay.textContent = `${String(firstDayOfMonth.getMonth() + 1).padStart(2, '0')}/${String(firstDayOfMonth.getDate()).padStart(2, '0')}/${year}`;
+        // Actualizar el título del mes y año
+        dateDisplay.textContent = `${firstDayOfMonth.toLocaleString('default', { month: 'long' })} ${year}`;
+
+        // Limpiar los días previos
         daysContainer.innerHTML = "";
 
         // Mostrar los días del mes anterior (si es necesario para completar la primera semana)
@@ -36,37 +38,25 @@ document.addEventListener("DOMContentLoaded", () => {
             const dayCell = document.createElement("div");
             dayCell.textContent = day;
             dayCell.classList.add("day");
+
+            // Agregar evento al hacer clic
             dayCell.addEventListener("click", () => {
                 // Al hacer clic, actualizamos el campo de fecha
-                const selectedDate = new Date(year, month, day);
-                const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`; // Formato yyyy-mm-dd
-                console.log("Fecha seleccionada: ", formattedDate); // Verificar que la fecha se está actualizando
-                dateField.value = formattedDate; // Mostrar la fecha en formato yyyy-mm-dd
+                dateField.value = `${day} ${firstDayOfMonth.toLocaleString('default', { month: 'short' })} ${year}`;
             });
+
             daysContainer.appendChild(dayCell);
         }
-
-        // Rellenar con días del mes siguiente si la última semana no se llena completamente
-        const remainingCells = 42 - (daysContainer.children.length); // Hay 42 celdas en total (6 semanas x 7 días)
-        for (let i = 1; i <= remainingCells; i++) {
-            const emptyCell = document.createElement("div");
-            emptyCell.classList.add("day", "next-month-day");
-            emptyCell.textContent = i;
-            daysContainer.appendChild(emptyCell);
-        }
-
-        // Aplicar clases para crear el grid visual
-        daysContainer.style.gridTemplateColumns = "repeat(7, 1fr)"; // Crear 7 columnas (uno por día de la semana)
     }
 
     // Función para manejar los cambios de mes
     prevButton.addEventListener("click", () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
+        currentDate.setMonth(currentDate.getMonth() - 1); // Disminuir el mes
         renderCalendar();
     });
 
     nextButton.addEventListener("click", () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
+        currentDate.setMonth(currentDate.getMonth() + 1); // Aumentar el mes
         renderCalendar();
     });
 
@@ -76,6 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderCalendar();
     });
 
-    // Inicializar el calendario
+    // Inicializar el calendario con el mes actual
     renderCalendar();
 });

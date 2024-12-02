@@ -23,20 +23,6 @@
     <div class="container">
         <h2 id="reserva-cita-title" class="text-center mb-5">Reservar Cita Médica</h2>
 
-        <!-- Mostrar los errores del formulario si existen -->
-        {% if formulario.errors %}
-            <div class="alert alert-danger">
-                <strong>¡Error!</strong> Hay algunos problemas con el formulario:
-                <ul>
-                    {% for field in formulario %}
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-
         <!-- Formulario -->
         <form method="POST" action="{% url 'hora' %}">
             {% csrf_token %}
@@ -91,14 +77,21 @@
                     <section id="calendar" class="calendar-section">
                         <div class="calendar border rounded shadow-sm p-3" role="application" aria-label="Calendario de reservas">
                             <div class="month d-flex justify-content-between align-items-center mb-3">
-                                <button class="btn btn-sm btn-outline-primary prev" type="button" aria-label="Mes anterior">
+                                <!-- Botón para mes anterior -->
+                                <button class="btn btn-sm btn-outline-primary prev" type="button" aria-label="Mes anterior" id="prev-month">
                                     <i class="fas fa-angle-left"></i>
                                 </button>
-                                <div class="date fs-5 fw-bold">Diciembre 2023</div>
-                                <button class="btn btn-sm btn-outline-primary next" type="button" aria-label="Mes siguiente">
+                        
+                                <!-- Lugar donde se mostrará el mes y año -->
+                                <div class="date fs-5 fw-bold" id="month-year">Diciembre 2024</div>
+                        
+                                <!-- Botón para mes siguiente -->
+                                <button class="btn btn-sm btn-outline-primary next" type="button" aria-label="Mes siguiente" id="next-month">
                                     <i class="fas fa-angle-right"></i>
                                 </button>
                             </div>
+                        
+                            <!-- Nombre de los días de la semana -->
                             <div class="weekdays d-flex justify-content-between text-center fw-bold">
                                 <div>Dom</div>
                                 <div>Lun</div>
@@ -108,11 +101,13 @@
                                 <div>Vie</div>
                                 <div>Sáb</div>
                             </div>
-                            <div class="days mt-3">
-                                <!-- Aquí se generarán dinámicamente los días -->
-                            </div>
+                        
+                            <!-- Aquí se generarán los días del mes -->
+                            <div class="days mt-3" id="days-container"></div>
+                        
+                            <!-- Botón para volver al día de hoy -->
                             <div class="goto-today d-flex justify-content-between align-items-center mt-4">
-                                <button class="today-btn btn btn-sm btn-secondary" type="button" aria-label="Ir a hoy">Hoy</button>
+                                <button class="today-btn btn btn-sm btn-secondary" type="button" aria-label="Ir a hoy" id="go-today">Hoy</button>
                             </div>
                         </div>
                     </section>
@@ -128,7 +123,6 @@
 </section>
 
 {% block extra_js %}
-<script src="{% static 'core/js/hora.js' %}"></script>
 <script src="{% static 'core/js/calendario.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
