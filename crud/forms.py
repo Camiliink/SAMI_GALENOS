@@ -24,12 +24,12 @@ class LoginForm(forms.Form):
     nombre_usuario = forms.CharField(
         label='Nombre de Usuario',
         max_length=20,
-        widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario'}),
+        widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario', 'class': 'form-control'}),
     )
     contrasenna = forms.CharField(
         label='Contraseña',
         max_length=20,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña', 'class': 'form-control'}),
     )
 
     def clean(self):
@@ -41,8 +41,6 @@ class LoginForm(forms.Form):
         if not Usuario.objects.filter(nombre_usuario=nombre_usuario, contrasenna=contrasenna).exists():
             raise forms.ValidationError("Usuario o contraseña incorrectos.")
         return cleaned_data
-
-
 class ReservaCitaForm(forms.ModelForm):
     class Meta:
         model = ReservarCita

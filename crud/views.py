@@ -5,12 +5,13 @@ from .forms import LoginForm
 from .forms import ReservaCitaForm
 from django.contrib import messages  
 from .models import  ReservarCita, EspecialidadMedico, Usuario, CentroMedico
+from django.contrib.auth.decorators import login_required
 
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            # Validar usuario y guardar su tipo en la sesión
+            # Validar usuario y contraseña
             nombre_usuario = form.cleaned_data.get('nombre_usuario')
             contrasenna = form.cleaned_data.get('contrasenna')
             try:
@@ -30,8 +31,6 @@ def nosotros(request):
     return render(request, 'paginas/nosotros.html')
 def hora(request):
     return render(request, 'paginas/hora.html')
-from django.shortcuts import render
-from .models import Usuario
 
 def usuarios(request):
     # Obtener el parámetro de búsqueda del RUT
@@ -65,7 +64,6 @@ def crear(request):
         return redirect('usuarios')
         
     return render(request, 'usuarios/crear.html', {'formulario': formulario})
-
 def editar(request,code):
     usuario = Usuario.objects.get(code=code)
     formulario = UsuarioForm(request.POST or None, request.FILES or None, instance=usuario)
@@ -75,16 +73,13 @@ def editar(request,code):
         return redirect('usuarios')
 
     return render(request, 'usuarios/editar.html',{'formulario': formulario})
-
 def eliminar(request,code):
     usuario= Usuario.objects.get(code=code)
     usuario.delete()
     return redirect('usuarios')
-
 def cerrar_sesion(request):
     request.session.flush()
     return redirect('login')
-
 def hora(request):
     # Obtener parámetros de la URL (con None por defecto en lugar de '')
     especialidad_seleccionada = request.GET.get('especialidad', None)
@@ -138,3 +133,5 @@ def hora(request):
         'centros_medicos': centros_medicos,
         'no_medicos_disponibles': no_medicos_disponibles,
     })
+def mis_reservas(request):
+    return render(request, 'paginas/mis_reservas.html')

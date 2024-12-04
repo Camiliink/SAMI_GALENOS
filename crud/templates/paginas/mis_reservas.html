@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Mis reservas
+{% endblock %}
+
+{% block contenido %}
+<h1 class="text-center my-4">Mis Reservas</h1>
+
+<!-- Contenedor para la tabla -->
+<div class="container">
+    <!-- Tabla de reservas con estilo Bootstrap y fondo azul -->
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID Reserva</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Simulación de reservas -->
+            <tr>
+                <td>1</td>
+                <td>2024-12-05</td>
+                <td>10:00 AM</td>
+                <td><span class="badge badge-success">Confirmada</span></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2024-12-06</td>
+                <td>02:30 PM</td>
+                <td><span class="badge badge-warning">Pendiente</span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2024-12-07</td>
+                <td>04:00 PM</td>
+                <td><span class="badge badge-danger">Cancelada</span></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>2024-12-10</td>
+                <td>11:00 AM</td>
+                <td><span class="badge badge-success">Confirmada</span></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>2024-12-12</td>
+                <td>09:30 AM</td>
+                <td><span class="badge badge-warning">Pendiente</span></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>2024-12-15</td>
+                <td>03:00 PM</td>
+                <td><span class="badge badge-danger">Cancelada</span></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>2024-12-18</td>
+                <td>01:00 PM</td>
+                <td><span class="badge badge-success">Confirmada</span></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>2024-12-20</td>
+                <td>05:00 PM</td>
+                <td><span class="badge badge-warning">Pendiente</span></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>2024-12-22</td>
+                <td>10:30 AM</td>
+                <td><span class="badge badge-success">Confirmada</span></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>2024-12-24</td>
+                <td>02:00 PM</td>
+                <td><span class="badge badge-danger">Cancelada</span></td>
+            </tr>
+
+            <!-- Si no hay reservas, mostrar este mensaje -->
+            <!--
+            <tr>
+                <td colspan="4" class="text-center">No tienes reservas aún.</td>
+            </tr>
+            -->
+        </tbody>
+    </table>
+
+    <!-- Si se desea permitir la creación de nuevas reservas, se puede incluir un enlace para ir a la página de reservas -->
+    <div class="text-center mt-5">
+        <a href="{% url 'hora' %}" class="btn btn-primary">Realizar una nueva reserva</a>
+    </div>
+</div>
+
+{% endblock %}

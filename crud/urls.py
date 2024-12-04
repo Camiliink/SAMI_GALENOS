@@ -15,5 +15,6 @@ urlpatterns = [
     path('usuarios/editar/<int:code>/', views.editar, name='editar'),  # Editar usuario específico
     path('usuarios/eliminar/<int:code>/', views.eliminar, name='eliminar'),  # Eliminar usuario específico
     path('logout', cerrar_sesion, name='logout'),
+    path('mis_reservas/', views.mis_reservas, name='mis_reservas'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
