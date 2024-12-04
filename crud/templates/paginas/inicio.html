@@ -3,129 +3,136 @@
 
 {% block titulo %} Inicio {% endblock %}
 
-    {% block contenido %} 
-    <head>  
-        <link type="image/x-icon" rel="shortcut icon" href="{% static 'core/img/' %}" />
-        <!-- font awesome cdn link  -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+{% block contenido %} 
+<head>  
+    <link type="image/x-icon" rel="shortcut icon" href="{% static 'core/img/favicon.ico' %}" />
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-        <!-- custom css file link  -->
-        <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
-    </head>
-     <section id="home" class="home">
+    <!-- Custom CSS File -->
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
 
-        <div class="row">
-            
-            <h1 class="heading"> CENTRO MEDICO GALENOS</h1>
-            
-            <!-- home images  -->
-            <div class="images">
-                <img src="{% static 'core/img/home.webp' %}" alt="" class="img-bordered">
-                <BR></BR>
-            </div>
-
-            <!-- home heading  -->
-            <div class="content">
-                <h1><span>Cuida</span> tu salud, Cuida tu <span>Vida.</h1>
-                <p>Compromiso de nuestros doctores</p>
-            </div>
+<!-- Home Section -->
+<section id="home" class="home">
+    <div class="container text-center">
+        <h1 class="heading mb-4">CENTRO MEDICO GALENOS</h1>
+        
+        <!-- Home Image -->
+        <div class="images mb-5">
+            <img src="{% static 'core/img/home.webp' %}" alt="Centro Médico Galenos" class="img-fluid img-bordered">
         </div>
-    </section>
-    <!-- home section end  -->
 
+        <!-- Home Content -->
+        <div class="content mb-5">
+            <h1><span>Cuida</span> tu salud, Cuida tu <span>Vida.</span></h1>
+            <p class="lead">Compromiso de nuestros doctores para brindarte la mejor atención médica.</p>
+        </div>
+        
+        <!-- Button to navigate to services -->
+        <div>
+            <a href="#services" class="btn btn-primary btn-lg">Ver Nuestros Servicios</a>
+        </div>
+    </div>
+</section>
 
-    <!-- review section start  -->
-
-    <section id="review" class="review">
-
-        <h1 class="heading">Nuestros Pacientes</h1>
-        <h3 class="title">Porque su opinión importa.</h3>
+<!-- Review Section -->
+<section id="review" class="review py-5" style="background-color: #f8f9fa;">
+    <div class="container text-center">
+        <h1 class="heading mb-4">Nuestros Pacientes</h1>
+        <h3 class="title mb-4">Porque su opinión importa.</h3>
 
         <div class="box-container">
-
-            <!-- start here  -->
+            <!-- Review 1 -->
             <div class="box">
                 <i class="fas fa-quote-left"></i>
-                <p>Excelente servicio, buenos profesionales </p>
-                <br>
+                <p>Excelente servicio, buenos profesionales.</p>
                 <div class="images">
-                    <img src="{% static 'core/img/img-1.jpg' %}" alt="">
-
+                    <img src="{% static 'core/img/img-1.jpg' %}" alt="Paciente Constanza Jopia" class="img-fluid">
                     <div class="info">
                         <h3>Constanza Jopia</h3>
-                        <span>Fecha : 11/2020</span>
+                        <span>Fecha: 11/2020</span>
                     </div>
                 </div>
             </div>
-            <!-- end here  -->
 
-            
-            <!-- start here  -->
+            <!-- Review 2 -->
             <div class="box">
                 <i class="fas fa-quote-left"></i>
-                <p>Toda la familia se atiende aquí y nunca decepciona</p>
-
+                <p>Toda la familia se atiende aquí y nunca decepciona.</p>
                 <div class="images">
-                    <img src="{% static 'core/img/img-2.jpg' %}" alt="">
-
+                    <img src="{% static 'core/img/img-2.jpg' %}" alt="Paciente Jhon Correcto" class="img-fluid">
                     <div class="info">
                         <h3>Jhon Correcto</h3>
-                        <span>Fecha : 03/2022</span>
+                        <span>Fecha: 03/2022</span>
                     </div>
                 </div>
             </div>
-            <!-- end here  -->
 
-            
-            <!-- start here  -->
+            <!-- Review 3 -->
             <div class="box">
                 <i class="fas fa-quote-left"></i>
-                <p>Me dejaron impecable, excelentes profesionales</p>
-
+                <p>Me dejaron impecable, excelentes profesionales.</p>
                 <div class="images">
-                    <img src="{% static 'core/img/img-3.jpg' %}" alt="">
-
+                    <img src="{% static 'core/img/img-3.jpg' %}" alt="Paciente Juan Concha" class="img-fluid">
                     <div class="info">
                         <h3>Juan Concha</h3>
-                        <span>Fecha : 12/2019</span>
+                        <span>Fecha: 12/2019</span>
                     </div>
                 </div>
             </div>
-            <!-- end here  -->
         </div>
-    </section>
-    <!-- review section end  -->
- 
-    <!-- contact section start  -->
+    </div>
+</section>
 
-    <section id="contact" class="contact">
-
-        <h1 class="heading">Contacto</h1>
-
+<!-- Services Section -->
+<section id="services" class="services py-5">
+    <div class="container text-center">
+        <h1 class="heading mb-4">Nuestros Servicios</h1>
         <div class="row">
+            <div class="col-md-4">
+                <div class="service-box shadow-lg p-4 mb-4 rounded">
+                    <i class="fas fa-stethoscope fa-3x mb-3"></i>
+                    <h3>Consulta Médica General</h3>
+                    <p>Recibe atención médica general con profesionales capacitados en diversas especialidades.</p>
+                </div>
+            </div>
 
-            <!-- form images  -->
-            
+            <div class="col-md-4">
+                <div class="service-box shadow-lg p-4 mb-4 rounded">
+                    <i class="fas fa-heartbeat fa-3x mb-3"></i>
+                    <h3>Atención Cardiológica</h3>
+                    <p>Servicios de diagnóstico y tratamiento para enfermedades del corazón con tecnología avanzada.</p>
+                </div>
+            </div>
 
-            <div class="form-container">    
-
-            <input type="text" placeholder="Nombre Completo" name="" id="">
-            <input type="email" placeholder="Correo" name="" id="">
-            <textarea name="" cols="30" rows="10" id=""></textarea>
-            <input type="submit" value="Enviar">
+            <div class="col-md-4">
+                <div class="service-box shadow-lg p-4 mb-4 rounded">
+                    <i class="fas fa-user-md fa-3x mb-3"></i>
+                    <h3>Ginecología y Obstetricia</h3>
+                    <p>Atención especializada en salud femenina, con cuidados prenatales y postnatales de calidad.</p>
+                </div>
             </div>
         </div>
+    </div>
+</section>
 
+<!-- Contact Section -->
+<section id="contact" class="contact py-5" style="background-color: #e9ecef;">
+    <div class="container">
+        <h1 class="heading text-center mb-4">Contacto</h1>
+        <div class="row">
+            <div class="form-container mx-auto">
+                <h3 class="text-center mb-4">Envíanos un mensaje</h3>
+                <form action="#" method="post">
+                    <input type="text" placeholder="Nombre Completo" id="nombre" required class="form-control mb-3">
+                    <input type="email" placeholder="Correo" id="correo" required class="form-control mb-3">
+                    <textarea placeholder="Escribe tu mensaje" id="mensaje" rows="5" required class="form-control mb-3"></textarea>
+                    <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
-
-
-    </section>
-
-
-
-    <!-- contact section end  -->
-
-
-    
-      {% endblock %}
-   
+{% endblock %}
