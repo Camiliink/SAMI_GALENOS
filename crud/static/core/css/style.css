@@ -673,3 +673,9 @@
 .login-container button:hover {
     background-color: #0056b3;
 }
+.img-professional {
+  width: 50px;
+  height: 50px; /* Ajusta el tamaño según tus necesidades */
+  object-fit: cover; /* Mantiene la proporción de la imagen y la recorta si es necesario */
+  border-radius: 50%; /* Hace que las imágenes sean circulares */
+}
